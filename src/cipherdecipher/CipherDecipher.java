@@ -18,9 +18,17 @@ public class CipherDecipher {
         else
                 return (char) (in - key);
     }
-            
+    static public String encipher(String in, String key)
+    {
+        char[] output = new char[in.length()];
+        for(int i = 0; i < in.length(); i++)
+        {
+            output[i] = getCipherChar(in.charAt(i),key.charAt(i));
+        }
+        return output.toString();
+    }
     public static void main(String[] args) {
-        // TODO code application logic here
+        System.out.println(encipher("mess","lock"));
     }
     
 }
