@@ -11,24 +11,58 @@ package cipherdecipher;
  */
 public class CipherDecipher {
 
-    static public char getCipherChar(char in, char key)
+    static public int getCipherAscii(int in, int key)
     {
         if(in < key)
-                return (char) ('z' + in + key);
+                return 132 + in - key;
         else
-                return (char) (in - key);
+                return 96 + in - key;
     }
-    static public String encipher(String in, String key)
+    static public int[] generateKey(int[] in,int[] key)
     {
-        char[] output = new char[in.length()];
-        for(int i = 0; i < in.length(); i++)
+        int buff[] = new int[255];
+        int count = 0;
+        while(count < in.length)
         {
-            output[i] = getCipherChar(in.charAt(i),key.charAt(i));
+            for(int i = 0;i<key.length;i++)
+            {
+                buff[i+count] = key[i];
+            }
+            count +=key.length;
         }
-        return output.toString();
+        return buff;
     }
+    static public int[] encipher(int[]in, int[] key)
+    {
+        int[] output = new int[in.length];
+        for(int i = 0; i < in.length; i++)
+        {
+            output[i] = getCipherAscii(in[i],key[i]);
+        }
+        return output;
+    }
+    
+    static public char toChar(int in)
+    {
+        return (char) in;
+    }
+    
+    static public int[] toInt(String in)
+    {
+        int[] out = new int[255];
+        for(int i = 0; i< in.length();i++)
+        {
+            out[i] = (int) in.charAt(i);
+        }
+        
+        return out;
+    }
+    
     public static void main(String[] args) {
-        System.out.println(encipher("mess","lock"));
+        
+        int[] input = {1,2,3,4};
+        int[] key = {1,2};
+        System.out.println(generateKey(input,key)[2]);
     }
     
 }
